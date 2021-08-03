@@ -1,0 +1,22 @@
+<template>
+    <lightning-card >
+        <div class="scoped_tabs slds-m-around_xx-small">
+            <lightning-tabset variant="scoped" active-tab-value={activeTabValue} >
+                <lightning-tab icon-name="utility:anywhere_alert" label="Opportunities"  value="Opportunity" >
+                    <c-product-builder-opp-list></c-product-builder-opp-list>
+                </lightning-tab>
+                <lightning-tab icon-name="utility:engage" label="Custom" value="Product" >
+                    <c-product-builder-custom-product></c-product-builder-custom-product>
+                </lightning-tab>
+                <lightning-tab icon-name="utility:insert_template" label="Assemblies" value="Assembly" >
+                    <c-prod-builder-custom-assembly></c-prod-builder-custom-assembly>
+                </lightning-tab>
+                <lightning-tab icon-name="utility:custom_apps" label="Assets" value="Asset" >
+                   <c-prod-builder-asset></c-prod-builder-asset>
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+        
+    </lightning-card>
+       
+</template>

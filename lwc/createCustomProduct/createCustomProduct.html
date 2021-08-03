@@ -1,0 +1,61 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal  slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" onclick={fireFailureEvent}
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Custom Product</h2>
+            </header>
+            <!-- Modal/Popup body starts here -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-record-edit-form  object-api-name={objectApiName} onsuccess={onProductCreation} >
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="Name" ></lightning-input-field> 
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="ProductCode" required ></lightning-input-field> 
+                        </div>
+                        <div class="slds-col slds-size_1-of-1">
+                            <lightning-input-field field-name="Description" ></lightning-input-field> 
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="Vendor__c" ></lightning-input-field> 
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-file-upload label="Attach receipt"
+                                name="fileUploader" onuploadfinished={handleUploadFinished}
+                                multiple>
+                            </lightning-file-upload>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="Cost__c" ></lightning-input-field> 
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="IsActive" required ></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field field-name="Type_Product__c" disabled value="Custom Product" required ></lightning-input-field>
+                        </div>
+                        <div class="slds-align_absolute-center slds-m-top_large slds-col slds-size_1-of-1">
+                            <lightning-button variant="brand"   
+                        type="submit" name="cancel" label="Cancel" onclick={overrideCancel} >
+                        </lightning-button>
+                            <lightning-button variant="success" 
+                            type="submit" class="slds-m-left_xx-small" name="save" label="Save">
+                            </lightning-button>
+                       </div>
+                    </div>
+                </lightning-record-edit-form>
+            </div>
+        </div>
+        
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

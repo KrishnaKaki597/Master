@@ -1,0 +1,90 @@
+<template>
+    <div class="slds-m-top_x-small">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                <lightning-input type="search" value={searchKey} placeholder="search product by product name or code"
+                    onselect={handleSearchKeyChange} onkeyup={handleSearchKeyChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                <lightning-combobox options={filterOptions} value={filter} onchange={handleProductFitlerChange}
+                    placeholder="choose vendor"></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <div class="slds-m-top_small">
+        <template if:true={customProdList}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                aria-label="Example table of Opportunities with vertical borders">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="width_18" scope="col">
+                            <div class="slds-truncate">Vendor Part no.</div>
+                        </th>
+                        <th class="width_18" scope="col">
+                            <div class="slds-truncate">Name</div>
+                        </th>
+                        <th class="width_24" scope="col">
+                            <div class="slds-truncate">No.Of.Items</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Cost</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Documentation</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds=-truncate">Action</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <template for:each={customProdList} for:item="product">
+                            <tr key={product.Product2Id} class="slds-hint-parent">
+                                <td>
+                                    <div class="slds-truncate">
+                                        {product.ProductCode}
+                                        <!-- <a data-p2id={product.Product2Id} href={recordPageUrl} onclick={navigateToWebPage} target="_blank"></a> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        {product.Name}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        {product.Product2.Number_of_items__c}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning-formatted-number value={product.UnitPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning-button data-recordid={product.Product2Id} variant="brand-outline" label="Documents" title="Download action with base variant" onclick={previewAttachment} icon-name="standard:folder" class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning-icon icon-name="utility:edit" size="x-small" data-asmbid={product.Product2Id} onclick={editAssemblyProd} ></lightning-icon>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                </tbody>
+            </table>
+            <template if:true={showCustomAssembly}>
+                <c-create-custom-assembly onsuccess={closeChildModal} onfailure={onChildFailure} ></c-create-custom-assembly>
+            </template>
+            <template if:true={showAssmblyEditScreen}>
+                <c-custom-assembly-edit-cmp onfailure={onChildFailure} record-id={assemblyId}></c-custom-assembly-edit-cmp>
+            </template>
+        </template>
+        <div class="slds-align_absolute-center slds-m-top_large">
+            <lightning-button label="Create New" variant="brand" onclick={createCustomProd} ></lightning-button>
+            <lightning-button variant="destructive" class="slds-m-left_small" label="Refresh" onclick={resetData}></lightning-button>
+        </div>
+    </div>
+</template>

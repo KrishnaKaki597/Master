@@ -1,0 +1,10 @@
+.custom_button_stateful{
+     --sds-c-button-neutral-spacing-inline-start: 0.6rem;
+     --sds-c-button-neutral-spacing-inline-end: 0.2rem;
+ }
+ .custom_box{
+     background: lightgray;
+     font-size: inherit;
+     font-weight: bold;
+     text-align: center;
+ }

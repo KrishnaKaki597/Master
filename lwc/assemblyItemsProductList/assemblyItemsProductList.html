@@ -1,0 +1,54 @@
+<template>
+  <lightning-card class="iconClass" variant="Narrow"  title="Assembly Line Items" icon-name="custom:custom93">
+      <div class="slds_header">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Opportunity Name">Product Name</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Account Name">Product Code</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Cost">Cost</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Cost">Type</div>
+              </th>
+              <th class="" scope="col">
+                <div class="slds-truncate" title="Cost">IsActive</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <template if-true={assemblyItemsList}>
+                  <template for:each={assemblyItemsList} for:item="oppty">
+                      <tr key={oppty.Id} class="slds-hint-parent">
+                          <td data-label="Account Name">
+                            <div class="slds-truncate">
+                              {oppty.Name}
+                            </div>
+                          </td>
+                          <td data-label="Code">
+                            <div class="slds-truncate">
+                                {oppty.Code}
+                            </div>
+                          </td>
+                          <td data-label="Cost">
+                            <div class="slds-truncate" >{oppty.Cost}</div>
+                          </td>
+                          <td data-label="Type">
+                            <div class="slds-truncate">{oppty.Type}</div>
+                          </td>
+                          <td data-label="IsActive">
+                            <div class="slds-truncate">{oppty.IsActive}</div>
+                          </td>
+                        </tr>
+                  </template>
+              </template>
+          </tbody>
+        </table>
+      </div>
+  </lightning-card>
+</template>

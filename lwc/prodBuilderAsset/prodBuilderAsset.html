@@ -1,0 +1,68 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Opportunity Name">Asset Id</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Account Name">Asset Name</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Close Date">Description</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Stage">Unity Of Measure</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Amount">Cost</div>
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            <template if-true={assetsList}>
+                <template for:each={assetsList} for:item="asset">
+                    <tr key={asset.Id} class="slds-hint-parent">
+                        <td data-label="Assett Name">
+                          <div class="slds-truncate">
+                            <a data-p2id={asset.Product2Id} href={recordPageUrl} onclick={navigateToWebPage} target="_blank" >{asset.ProductCode}</a>
+                          </div>
+                        </td>
+                        <td data-label="Asset Name">
+                          <div class="slds-truncate">
+                              {asset.Name}
+                          </div>
+                        </td>
+                        <td data-label="Prospecting">
+                          <div class="slds-truncate" >{asset.Product2.Description}</div>
+                        </td>
+                        <td data-label="Confidence">
+                          <div class="slds-truncate">{asset.Product2.QuantityUnitOfMeasure}</div>
+                        </td>
+                        <td data-label="Amount">
+                          <div class="slds-truncate">
+                            <lightning-formatted-number format-style="currency" currency-code="USD" value={asset.UnitPrice} ></lightning-formatted-number>
+                          </div>
+                        </td>
+                        <td data-label="Action">
+                          <lightning-icon data-p2id={asset.Product2Id} icon-name="utility:edit" size="x-small" onclick={editProductScreen}></lightning-icon>
+                        </td>
+                      </tr>
+                </template>
+            </template>
+        </tbody>
+      </table>
+      <template if:true={showCustomScreen}>
+        <c-create-custom-asset onsuccess={closeChildModal} onfailure={onChildFailure} ></c-create-custom-asset>
+      </template>
+      <template if:true={editScreen}>
+        <c-product-edit-screen record-id={prodId} is-asset-screen=true onclose={closeEditScreen} ></c-product-edit-screen>
+      </template>
+      <div class=" slds-align_absolute-center  slds-m-top_large">
+        <lightning-button variant="brand" label="Create New" onclick={createNewAsset}></lightning-button>
+        <lightning-button variant="destructive" class="slds-m-left_small" label="Refresh" onclick={resetData}></lightning-button>
+      </div>
+</template>

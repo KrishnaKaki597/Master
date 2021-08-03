@@ -1,0 +1,46 @@
+.slds-var-m-right_xx-large{
+    margin-right:5em;
+}
+.margin_left{
+    margin-left:2.9em;
+}
+.custom_button_stateful{
+    --sds-c-button-neutral-spacing-inline-start: 0.6rem;
+    --sds-c-button-neutral-spacing-inline-end: 0.2rem;
+}
+.custom_box{
+    background: lightgray;
+    font-size: inherit;
+    font-weight: bold;
+    text-align: center;
+}
+.width_class{
+    width:10%;
+}
+.width_18{
+    width:18%;
+}
+.width_24{
+    width:24%;
+}
+.width_22{
+    width:22%;
+}
+.width_10,.width_11{
+    width:10%;
+}
+.width_20{
+    width:20%;
+}
+.width_9{
+    width:9%;
+}
+.width_15{
+    width:15%;
+}
+.width_8{
+    width:8%;
+}
+.width_5{
+    width:1%;
+}

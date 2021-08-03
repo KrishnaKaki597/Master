@@ -1,0 +1,336 @@
+<template>
+          <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal_large slds-modal slds-fade-in-open">
+              <div class="slds-modal__container">'
+                  <header class="slds-modal__header">
+                      <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                          <lightning-icon icon-name="utility:close" onclick={fireFailureEvent}
+                              alternative-text="close"
+                              variant="inverse"
+                              size="small" ></lightning-icon>
+                          <span class="slds-assistive-text">Close</span>
+                      </button>
+                      <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Assembly</h2>
+                  </header>
+                  <div class="slds-modal__content scrollableContent slds-p-around_medium" id="modal-content-id-1">
+                      <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onsuccess={onAssemblyCreation} >
+                          <div class="slds-grid slds-wrap">
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-input-field field-name="Name" ></lightning-input-field> 
+                              </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                   <lightning-input-field field-name="ProductCode" required ></lightning-input-field>
+                               </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-input-field field-name="Type_Product__c" disabled=true></lightning-input-field>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-input-field field-name="Cost__c" value={totalSalesPrice} disabled=true  ></lightning-input-field>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-input-field field-name="IsActive" required ></lightning-input-field>
+                              </div>
+                              <div class="slds-col slds-size_1-of-2">
+                                  <lightning-input-field field-name="Number_of_items__c" value={itemsCount} disabled=true ></lightning-input-field>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1">
+                                   <lightning-input-field field-name="Description"></lightning-input-field>
+                               </div>
+      
+                              <div class="slds-col slds-size_1-of-1">
+                                  <lightning-tabset  >
+                                      <lightning-tab label="Product">
+                                          <div class="scorll_div_head">
+                                              <div class="slds-m-top_x-small">
+                                                  <lightning-layout multiple-rows>
+                                                      <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                                          <lightning-input type="search" value={searchKey} placeholder="search product"
+                                                              onselect={handleSearchKeyChange} onkeyup={handleSearchKeyChange}></lightning-input>
+                                                      </lightning-layout-item>
+                                                      <lightning-layout-item flexibility="auto" padding="horizontal-medium">
+                                                          <lightning-combobox options={filterOptions} value={filter} onchange={handleProductFitlerChange}
+                                                              placeholder="Select Vendor"></lightning-combobox>
+                                                      </lightning-layout-item>
+                                                  </lightning-layout>
+                                              </div>
+                                              <div class="slds-m-top_small">
+                                                  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                                                  aria-label="Example table of Opportunities with vertical borders">
+                                                      <thead>
+                                                          <tr class="slds-line-height_reset">
+                                                              <th class="width_15" scope="col">
+                                                                  <div class="slds-truncate">Product Name</div>
+                                                              </th>
+                                                              <th class="width_15" scope="col">
+                                                                  <div class="slds-truncate">Product Code</div>
+                                                              </th>
+                                                              <th class="width_15" scope="col">
+                                                                  <div class="slds-truncate">Vendor</div>
+                                                              </th>
+                                                              <th class="width_10" scope="col">
+                                                                  <div class="slds-truncate">Description</div>
+                                                              </th>
+                                                              <th class="width_10" scope="col">
+                                                                  <div class="slds-truncate">Product Family</div>
+                                                              </th>
+                                                              <th class="" scope="col">
+                                                                  <div class="slds-truncate">Add</div>
+                                                              </th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          <template for:each={productList} for:item="product">
+                                                              <tr  key={product.Id} class="slds-hint-parent">
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          {product.prodName}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          {product.prodCode}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          {product.vendorName}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          {product.description}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          {product.prodType}
+                                                                      </div>
+                                                                  </td>
+                                                                  <td>
+                                                                      <div class="slds-truncate">
+                                                                          <lightning-button-stateful data-context='selection' data-recordid={product.Id}
+                                                                          icon-name-when-off="utility:add" icon-name-when-on="utility:check"
+                                                                          selected={product.isSelected} class="custom_button_stateful" data-selected={product.isSelected}
+                                                                          onclick={handleRowSelection}>
+                                                                          </lightning-button-stateful>
+                                                                      </div>
+                                                                  </td>
+                                                              </tr>
+                                                          </template>
+                                                      </tbody>
+                                                  </table>
+                                              </div>
+
+                                              <div class="slds-m-top_small">
+                                                <div class="slds-box slds-box_xx-small custom_box">Products Selected</div>
+                                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                    <thead>
+                                                        <tr class="slds-line-height_reset">
+                                                            <th class="width_18"  scope="col">
+                                                                <div class="slds-truncate">Product Name</div>
+                                                            </th>
+                                                            <th  class="width_18"  scope="col">
+                                                                <div class="slds-truncate">Vendor</div>
+                                                            </th>
+                                                            <th class="width_10"  scope="col">
+                                                                <div class="slds-truncate">Cost</div>
+                                                            </th>
+                                                            <th  class="width_8" scope="col">
+                                                                <div class="slds-truncate">Quantity</div>
+                                                            </th>
+                                                            <th class="width_15" scope="col">
+                                                                <div class="slds-truncate">Margin</div>
+                                                            </th>
+                                                            <th class="width_9" scope="col">
+                                                                <div class="slds-truncate">Sales Price</div>
+                                                            </th>
+                                                            <th class="width_5">
+                                                                <div class="slds-truncate">Action</div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template if:true={prodListToShow}>
+                                                            <template for:each={prodListToShow} for:item="product">
+                                                                <tr key={product.Id} class="slds-hint-parent">
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                {product.prodName}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                {product.vendorName}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <lightning-formatted-number value={product.UnitPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <lightning-input type="number" data-context='quantity' data-recordid={product.Id}
+                                                                                    value={product.quantity} variant="label-hidden" onchange={handleQtyMarginChange}>
+                                                                                </lightning-input>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <lightning-slider type="number" max="100" min="0" step="1"  data-context="margin" data-recordid={product.Id}
+                                                                                    value={product.margin} variant="label-hidden" onchange={handleQtyMarginChange}>
+                                                                                </lightning-slider>
+                                            
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <lightning-formatted-number value={product.salesPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="slds-truncate">
+                                                                                <lightning-icon icon-name="utility:delete" data-recordid={product.Id} onclick={deleteLineItem} size="x-small" variant="error" ></lightning-icon>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                            </template>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                            </div> 
+                                             
+                                              <div class="slds-m-top_xx-large"></div>
+                                          </div>
+                                      </lightning-tab>
+                                      <lightning-tab label="Labor">
+                                          <div class="labour slds-align_absolute-center">
+                                              <table class="halfWidth slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+                                                  aria-label="Example table of Opportunities with vertical borders">
+                                                      <thead>
+                                                          <tr class="slds-line-height_reset">
+                                                              <th scope="col">
+                                                                  <div class="slds-truncate">Labour Type</div>
+                                                              </th>
+                                                              <th scope="col">
+                                                                  <div class="slds-truncate">Hours</div>
+                                                              </th>
+                                                              <th scope="col">
+                                                                  <div class="slds-truncate">Rate</div>
+                                                              </th>
+                                                              <th  scope="col">
+                                                                  <div class="slds-truncate">Price</div>
+                                                              </th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          <tr>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      Standard
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={standardHours}  data-type="SH" onchange={onHourChange}  field-name="Standard_Hours__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={standardCost}  onchange={handleCostChange} data-cost="SC"  field-name="Standard_Cost__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden"   disabled value={standardPrice} field-name="Standard_Price__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      Overtime
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={overtimeHours} onchange={onHourChange} data-type="OH" field-name="Overtime_Hours__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={overtimeCost} onchange={handleCostChange} data-cost="OC"  field-name="Overtime_Cost__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={overtimePrice} disabled field-name="Overtime_Price__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      Time & 1/2
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" onchange={onHourChange} value={timeAndHalfHours} data-type="TH" field-name="Time_and_Half_Hours__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={timeCost} onchange={handleCostChange} data-cost="TC" field-name="Time_Half_Cost__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                              <td>
+                                                                  <div class="slds-truncate">
+                                                                      <lightning-input-field variant="label-hidden" value={timePrice} disabled field-name="Time_and_Half_Price__c"></lightning-input-field>
+                                                                  </div>
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                              </table>
+                                          </div>
+                                      </lightning-tab>
+                                      <lightning-tab label="Resources">
+                                          Content loading....!
+                                      </lightning-tab>
+                                    
+                                  </lightning-tabset>
+                              </div>
+                          </div>
+                          <div class="slds-grid slds-var-m-right_xx-large slds-grid_vertical slds-float_right">
+                              <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                  <tr class="slds-text-color_success">
+                                      <td>Product Cost</td>
+                                      <td><lightning-formatted-number value={itemCostPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number></td>
+                                  </tr>
+                                  <tr class="slds-text-color_success">
+                                      <td>Sales Price</td>
+                                      <td><lightning-formatted-number value={salesCostPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number></td>
+                                  </tr>
+                                  <tr class="slds-text-color_success">
+                                      <td>Labour Cost</td>
+                                      <td><lightning-formatted-number value={labourPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number></td>
+                                  </tr>
+                                  <tr class="slds-text-color_success">
+                                      <td>Total Sales Price</td>
+                                      <td><lightning-formatted-number value={totalSalesPrice} format-style="currency" currency-code="USD" ></lightning-formatted-number></td>
+                                  </tr>
+                              </table>
+                          </div>
+                          <div class="slds-align_absolute-center slds-m-top_large slds-col slds-size_1-of-1">
+                              <lightning-button variant="brand"   
+                              type="submit" name="cancel" label="Cancel" onclick={overrideCancel} >
+                              </lightning-button>
+                              <lightning-button variant="success" 
+                              type="submit" name="save" class="slds-m-left_xx-small" label="Save">
+                              </lightning-button>
+                         </div>
+                      </lightning-record-edit-form>
+                  </div>
+              </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

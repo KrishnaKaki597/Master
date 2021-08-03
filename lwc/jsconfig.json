@@ -1,0 +1,74 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/assemblyItemsProductList": [
+                "assemblyItemsProductList/assemblyItemsProductList.js"
+            ],
+            "c/createAssemblyProduct": [
+                "createAssemblyProduct/createAssemblyProduct.js"
+            ],
+            "c/createCustomAssembly": [
+                "createCustomAssembly/createCustomAssembly.js"
+            ],
+            "c/createCustomAsset": [
+                "createCustomAsset/createCustomAsset.js"
+            ],
+            "c/createCustomOpportunity": [
+                "createCustomOpportunity/createCustomOpportunity.js"
+            ],
+            "c/createCustomProduct": [
+                "createCustomProduct/createCustomProduct.js"
+            ],
+            "c/createProductsToOpp": [
+                "createProductsToOpp/createProductsToOpp.js"
+            ],
+            "c/datatableV2": [
+                "datatableV2/datatableV2.js"
+            ],
+            "c/opportunityEditScreen": [
+                "opportunityEditScreen/opportunityEditScreen.js"
+            ],
+            "c/prodBuilderAsset": [
+                "prodBuilderAsset/prodBuilderAsset.js"
+            ],
+            "c/prodBuilderCustomAssembly": [
+                "prodBuilderCustomAssembly/prodBuilderCustomAssembly.js"
+            ],
+            "c/productBuilderCmp": [
+                "productBuilderCmp/productBuilderCmp.js"
+            ],
+            "c/productBuilderCustomProduct": [
+                "productBuilderCustomProduct/productBuilderCustomProduct.js"
+            ],
+            "c/productBuilderOppList": [
+                "productBuilderOppList/productBuilderOppList.js"
+            ],
+            "c/productEditScreen": [
+                "productEditScreen/productEditScreen.js"
+            ],
+            "c/recordDetailFlowScreenComponent": [
+                "recordDetailFlowScreenComponent/recordDetailFlowScreenComponent.js"
+            ],
+            "c/richDatatable": [
+                "richDatatable/richDatatable.js"
+            ],
+            "c/toTestComponent": [
+                "toTestComponent/toTestComponent.js"
+            ],
+            "c/toastMessage": [
+                "toastMessage/toastMessage.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

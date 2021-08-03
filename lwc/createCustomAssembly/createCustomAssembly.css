@@ -1,0 +1,24 @@
+.scrollableContent{  
+    height: 80vh;
+    overflow-y: auto;
+}    
+.width_15{
+    width:18%;
+}
+.width_14{
+    width:14%;
+}
+.width_10{
+    width:10%;
+}
+.custom_button_stateful{
+    --sds-c-button-neutral-spacing-inline-start: 0.6rem;
+    --sds-c-button-neutral-spacing-inline-end: 0.2rem;
+}
+.margin_left{
+    margin-left:2.9em;
+}
+.halfWidth{
+    width:65%;
+    border:solid 1px gray;
+}

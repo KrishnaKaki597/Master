@@ -1,0 +1,80 @@
+<template>
+    
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Opportunity Name">Opportunity Name</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Account Name">Account Name</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Close Date">Close Date</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Stage">Stage</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="Amount">Amount</div>
+                </th>
+                <th class="" scope="col">
+                    <div class="slds-truncate" title="Cost Center">Cost Center</div>
+                </th>
+                <th class="" scope="col">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <template if-true={opportunityList}>
+                    <template for:each={opportunityList} for:item="oppty">
+                        <tr key={oppty.Id} class="slds-hint-parent">
+                            <td data-label="Account Name">
+                              <div class="slds-truncate">
+                                <a data-optyid={oppty.Id} href={recordPageUrl} onclick={navigateToWebPage} target="_blank">{oppty.Name}</a>
+                              </div>
+                            </td>
+                            <td data-label="Close Date">
+                              <div class="slds-truncate">
+                                  {oppty.Account.Name}
+                              </div>
+                            </td>
+                            <td data-label="Prospecting">
+                              <div class="slds-truncate" >{oppty.CloseDate}</div>
+                            </td>
+                            <td data-label="Confidence">
+                              <div class="slds-truncate">{oppty.StageName}</div>
+                            </td>
+                            <td data-label="Amount">
+                              <div class="slds-truncate">
+                                <lightning-formatted-number format-style="currency" currency-code="USD" value={oppty.Amount} ></lightning-formatted-number>
+                              </div>
+                            </td>
+                            <td data-label="Contact">
+                              <div class="slds-truncate">
+                                  {oppty.CostCenter__c}  
+                              </div>
+                            </td>
+                            <td data-label="Edit">
+                              <data class="slds-truncate">
+                                <lightning-icon icon-name="utility:edit" size="x-small" data-optyid={oppty.Id} onclick={editOpportunity} ></lightning-icon>
+                              </data>
+                            </td>
+                          </tr>
+                    </template>
+                </template>
+            </tbody>
+          </table>
+          
+    <template if:true={showCustomOpp}>
+      <c-create-custom-opportunity onsuccess={closeChildModal} onfailure={onChildFailure} ></c-create-custom-opportunity>
+    </template>
+    <template if:true={editScreen}>
+      <c-opportunity-edit-screen record-id={opptyId} onclose={closeEditScreen} ></c-opportunity-edit-screen>
+    </template>
+    <div class="slds-align_absolute-center slds-m-top_large">
+      <lightning-button label="Create New" variant="brand" onclick={createCustomOpp} ></lightning-button>
+      <lightning-button variant="destructive" class="slds-m-left_small" label="Refresh" onclick={resetData}></lightning-button>
+  </div>
+  </template>
