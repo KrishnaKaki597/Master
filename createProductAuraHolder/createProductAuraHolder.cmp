@@ -1,0 +1,16 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId">
+  <aura:html tag="style">
+    .slds-modal__container{ 
+      height : auto; width: 150%; max-width: 80%; 
+    }  
+    .slds-modal__footer{ 
+      display: inline !important; 
+    }
+    
+ </aura:html>   
+  <aura:attribute name="recordId" type="String" /> 
+  
+    
+  <c:createProductsToOpp lwc:dom="manual" oncloseAction="{!c.closeQuickAction}" oppId="{!v.recordId}" ></c:createProductsToOpp>
+ 
+</aura:component>
